@@ -19,10 +19,12 @@ namespace TestProject1
         {
             //Stack<int> result = null;
 
-            int[] arreglo_SourceStack = sourceStack.ToArray();
+            //Copia Stack
+            int[] arreglo_SourceStack = sourceStack.ToArray(); 
             Stack<int> copia_Stack;
             copia_Stack = new Stack<int>();
-
+            
+            //Recorrer datos
             for (int i = arreglo_SourceStack.Length - 1; i >= 0; i--) 
             {
                 copia_Stack.Push(arreglo_SourceStack[i]);                
@@ -36,31 +38,33 @@ namespace TestProject1
             pila_Final = new List<int>(); //Al revés
             result = new Stack<int>();
 
-            for (int i= copia_Stack.Count -1; i >= 0; i--)
+
+            for (int i= copia_Stack.Count -1; i >= 0; i--) //Resultados
             {
                 int elemento = copia_Stack.Pop(); //Guardar primer elemento 
                 salidas.Add(elemento); 
 
                 int elemento_Mayor = elemento;
 
-                for (int j = 0; j < salidas.Count; j++)
+                for (int j = 0; j < salidas.Count; j++) //Buscar si hay un numero mayor
                 
                 {
-                    if (salidas[j] > elemento_Mayor) elemento_Mayor = salidas[j];
+                    if (salidas[j] > elemento_Mayor) elemento_Mayor = salidas[j]; 
                 }
 
-                if (elemento_Mayor == elemento)
+                if (elemento_Mayor == elemento) 
                 {
-                    pila_Final.Add(-1);
+                    pila_Final.Add(-1); // -1 en el resultado
                 }
 
                 else
                 {
-                    pila_Final.Add(elemento_Mayor);
+                    pila_Final.Add(elemento_Mayor); // Este numero al resultado
                 }
             }
             
 
+            //Guardar en orden
             for (int i = pila_Final.Count - 1; i >= 0; i--)
             {
                 result.Push(pila_Final[i]);
@@ -74,13 +78,14 @@ namespace TestProject1
         {
             // Dictionary<int, EValueType> result = null;
             
+            //Crear copia
             Dictionary<int, EValueType> result = new Dictionary<int, EValueType>();
 
             int[] copia;
             copia = new int[sourceArr.Length];
             sourceArr.CopyTo(copia, 0);
 
-            for (int i= 0; i < copia.Length; i++)
+            for (int i= 0; i < copia.Length; i++) //Pruebas
             {
                 if (copia[i] % 2 == 0) 
                 {
@@ -115,17 +120,18 @@ namespace TestProject1
         internal static int CountDictionaryRegistriesWithValueType(Dictionary<int, EValueType> sourceDict, EValueType type)
         {
 
-            int result = 0;
+            int result = 0; //Contador
 
+           //Copia
             int[] llaves;
             llaves = new int[sourceDict.Count];
             sourceDict.Keys.CopyTo(llaves, 0);
 
-            for (int i = 0; i < llaves.Length; i++)
+            for (int i = 0; i < llaves.Length; i++) //Recorrer dict
             {
                 if (sourceDict[llaves[i]] == type)
                 {
-                    result++;
+                    result++; 
                 }
             }
  
@@ -138,6 +144,7 @@ namespace TestProject1
 
             Dictionary<int, EValueType> result = new Dictionary<int, EValueType>();
 
+            //Arreglos
             int[] llaves;
             llaves = new int[sourceDict.Count];
             sourceDict.Keys.CopyTo(llaves, 0);
@@ -146,7 +153,7 @@ namespace TestProject1
             valores = new EValueType[sourceDict.Count];
             sourceDict.Values.CopyTo(valores, 0);
 
-            for(int i = 0; i < llaves.Length; i++)
+            for(int i = 0; i < llaves.Length; i++) // Ordenar valores
             {
                 for (int j = 0; j < llaves.Length -1; j++)
                 {
@@ -167,7 +174,7 @@ namespace TestProject1
                 }
             }
 
-            for (int i = 0; i < llaves.Length; i++)
+            for (int i = 0; i < llaves.Length; i++) // Agregar resultados
             {
                 result.Add(llaves[i], valores[i]);
             }
@@ -180,6 +187,7 @@ namespace TestProject1
         {
             //Queue<Ticket>[] result = null;
 
+            //Copia
             Queue<Ticket>[] result = new Queue<Ticket>[3];
 
             Ticket[] copia;
@@ -194,7 +202,7 @@ namespace TestProject1
             fila_Subscripcion = new Queue<Ticket>();
             fila_Cancelacion = new Queue<Ticket>();
 
-            for (int i = 0; i < copia.Length; i++)
+            for (int i = 0; i < copia.Length; i++) // Ordenar valores
             {
                 for(int j = 0; j <copia.Length - 1; j++)
                 {
@@ -213,13 +221,14 @@ namespace TestProject1
                 
             }
 
-            for (int i= 0; i < copia.Length; i++)
+            for (int i= 0; i < copia.Length; i++) // Asignar turnos de fila
             {
                 if (copia[i].RequestType == Ticket.ERequestType.Payment) fila_Pago.Enqueue(copia[i]);
                 if (copia[i].RequestType == Ticket.ERequestType.Subscription) fila_Subscripcion.Enqueue(copia[i]);
                 if (copia[i].RequestType == Ticket.ERequestType.Cancellation) fila_Cancelacion.Enqueue(copia[i]);
             }
 
+            //Guardar
             result[0] = fila_Pago;
             result[1] = fila_Subscripcion;
             result[2] = fila_Cancelacion;
@@ -231,12 +240,14 @@ namespace TestProject1
         {
             bool result = false;
 
+            //Encontrar el RequestType
             Ticket.ERequestType tipo_fila;
             tipo_fila = targetQueue.Peek().RequestType;
 
+            // Revisar que se cumplan las condiciones
             if (ticket.RequestType == tipo_fila && ticket.Turn > 0 && ticket.Turn < 100)
             {
-                result = true;
+                result = true; // Si se cumplen 
             }
 
             return result;
