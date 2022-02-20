@@ -150,8 +150,11 @@ namespace TestProject1
             {
                 for (int j = 0; j < llaves.Length -1; j++)
                 {
-                    int llave_sgte = llaves[j + 1];
-                    EValueType valor_sgte = valores[j + 1];
+                    int llave_sgte;
+                    EValueType valor_sgte; 
+
+                    llave_sgte= llaves[j + 1];
+                    valor_sgte=  valores[j + 1];
 
                     if (llaves[j] < llave_sgte)
                     {
@@ -175,7 +178,51 @@ namespace TestProject1
         //-----3-----
         internal static Queue<Ticket>[] ClassifyTickets(List<Ticket> sourceList)
         {
-            Queue<Ticket>[] result = null;
+            //Queue<Ticket>[] result = null;
+
+            Queue<Ticket>[] result = new Queue<Ticket>[3];
+
+            Ticket[] copia;
+            copia = new Ticket[sourceList.Count];
+            sourceList.CopyTo(copia, 0);
+
+            Queue<Ticket> fila_Pago;
+            Queue<Ticket> fila_Subscripcion;
+            Queue<Ticket> fila_Cancelacion; 
+
+            fila_Pago = new Queue<Ticket>(); 
+            fila_Subscripcion = new Queue<Ticket>();
+            fila_Cancelacion = new Queue<Ticket>();
+
+            for (int i = 0; i < copia.Length; i++)
+            {
+                for(int j = 0; j <copia.Length - 1; j++)
+                {
+                    int turno_sgte; 
+                    Ticket ticket_sgte;
+
+                    turno_sgte = copia[j + 1].Turn;
+                    ticket_sgte = copia[j + 1];
+
+                    if (copia[j].Turn > turno_sgte)
+                    {
+                        copia[j + 1] = copia[j];
+                        copia[j] = ticket_sgte;
+                    }
+                }
+                
+            }
+
+            for (int i= 0; i < copia.Length; i++)
+            {
+                if (copia[i].RequestType == Ticket.ERequestType.Payment) fila_Pago.Enqueue(copia[i]);
+                if (copia[i].RequestType == Ticket.ERequestType.Subscription) fila_Subscripcion.Enqueue(copia[i]);
+                if (copia[i].RequestType == Ticket.ERequestType.Cancellation) fila_Cancelacion.Enqueue(copia[i]);
+            }
+
+            result[0] = fila_Pago;
+            result[1] = fila_Subscripcion;
+            result[2] = fila_Cancelacion;
 
             return result;
         }
