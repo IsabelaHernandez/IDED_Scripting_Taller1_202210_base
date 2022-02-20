@@ -231,6 +231,14 @@ namespace TestProject1
         {
             bool result = false;
 
+            Ticket.ERequestType tipo_fila;
+            tipo_fila = targetQueue.Peek().RequestType;
+
+            if (ticket.RequestType == tipo_fila && ticket.Turn > 0 && ticket.Turn < 100)
+            {
+                result = true;
+            }
+
             return result;
         }
     }
