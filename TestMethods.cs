@@ -136,7 +136,38 @@ namespace TestProject1
         {
             //Dictionary<int, EValueType> result = null;
 
+            Dictionary<int, EValueType> result = new Dictionary<int, EValueType>();
 
+            int[] llaves;
+            llaves = new int[sourceDict.Count];
+            sourceDict.Keys.CopyTo(llaves, 0);
+
+            EValueType[] valores;
+            valores = new EValueType[sourceDict.Count];
+            sourceDict.Values.CopyTo(valores, 0);
+
+            for(int i = 0; i < llaves.Length; i++)
+            {
+                for (int j = 0; j < llaves.Length -1; j++)
+                {
+                    int llave_sgte = llaves[j + 1];
+                    EValueType valor_sgte = valores[j + 1];
+
+                    if (llaves[j] < llave_sgte)
+                    {
+                        llaves[j + 1] = llaves[j];
+                        llaves[j] = llave_sgte;
+                        valores[j + 1] = valores[j];
+                        valores[j] = valor_sgte;
+                        
+                    }
+                }
+            }
+
+            for (int i = 0; i < llaves.Length; i++)
+            {
+                result.Add(llaves[i], valores[i]);
+            }
 
             return result;
         }
