@@ -114,13 +114,29 @@ namespace TestProject1
 
         internal static int CountDictionaryRegistriesWithValueType(Dictionary<int, EValueType> sourceDict, EValueType type)
         {
-            
-            return 0;
+
+            int result = 0;
+
+            int[] llaves;
+            llaves = new int[sourceDict.Count];
+            sourceDict.Keys.CopyTo(llaves, 0);
+
+            for (int i = 0; i < llaves.Length; i++)
+            {
+                if (sourceDict[llaves[i]] == type)
+                {
+                    result++;
+                }
+            }
+ 
+            return result;
         }
 
         internal static Dictionary<int, EValueType> SortDictionaryRegistries(Dictionary<int, EValueType> sourceDict)
         {
-            Dictionary<int, EValueType> result = null;
+            //Dictionary<int, EValueType> result = null;
+
+
 
             return result;
         }
